@@ -1,18 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DemoServer.Utils;
 using DemoServer.Utils.Cache;
 using DemoServer.Utils.Database;
 using Microsoft.AspNetCore.Mvc;
+using Raven.Client.Documents;
+
 #region Usings
 using System.Collections.Generic;
 using System.Linq;
 #endregion
 
-namespace DemoServer.Controllers.Demos.Queries.QueryOnCollection
+namespace DemoServer.Controllers.Demos.Queries.SimpleCollectionQuery
 {
-    public class QueryOnCollectionController : DemoCodeController
+    public class SimpleCollectionQueryController : DemoCodeController
     {
-        public QueryOnCollectionController(HeadersAccessor headersAccessor, DocumentStoreCache documentStoreCache,
+        public SimpleCollectionQueryController(HeadersAccessor headersAccessor, DocumentStoreCache documentStoreCache,
             DatabaseAccessor databaseAccessor) : base(headersAccessor, documentStoreCache, databaseAccessor)
         {
         }
@@ -23,7 +26,7 @@ namespace DemoServer.Controllers.Demos.Queries.QueryOnCollection
 
             using (var session = OpenAsyncSession())
             {
-                anyCompanyExists = session.Query<Company>().Any();
+                anyCompanyExists = await session.Query<Company>().AnyAsync();
             }
 
             if (anyCompanyExists == false)

@@ -8,7 +8,7 @@ namespace DemoServer.Controllers.Demos.Basics.EditDocument
 {
     public class EditDocumentController : DemoCodeController
     {
-        private const string DocumentId = "companies/1-A";
+        private const string DocumentId = "companies/1-A"; // TODO... hard code in code so use will see !
 
         public EditDocumentController(HeadersAccessor headersAccessor, DocumentStoreCache documentStoreCache,
             DatabaseAccessor databaseAccessor) : base(headersAccessor, documentStoreCache, databaseAccessor)
@@ -21,23 +21,25 @@ namespace DemoServer.Controllers.Demos.Basics.EditDocument
             Name = "Company Name",
             Phone = "(+972)52-5486969"
         };
-
-        protected override Task SetDemoPrerequisites()
+        
+        private async Task SetRunPrerequisites()
         {
-            return DatabaseAccessor.EnsureDocumentExists(UserId, DocumentId, InitialCompany);
+            await DatabaseAccessor.EnsureDocumentExists(UserId, DocumentId, InitialCompany);
         }
 
         [HttpPost]
-        public IActionResult Run(RunParams runParams)
+        public async Task<IActionResult> Run(RunParams runParams)
         {
             var companyName = runParams.CompanyName;
 
+            await SetRunPrerequisites();
+            
             #region Demo
             
             using (var session = DocumentStoreHolder.Store.OpenSession())
             {
                 #region Step_1
-                var company = session.Load<Company>(DocumentId);
+                var company = session.Load<Company>("companies/1-A");
                 #endregion
                 
                 #region Step_2

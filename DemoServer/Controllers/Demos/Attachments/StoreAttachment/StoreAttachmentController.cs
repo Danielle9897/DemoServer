@@ -25,9 +25,9 @@ namespace DemoServer.Controllers.Demos.Attachments.StoreAttachment
             Address = "1 Plaza Center"
         };
 
-        protected override async Task SetDemoPrerequisites()
+        private async Task SetRunPrerequisites(string documentId)
         {
-            await DatabaseAccessor.EnsureDocumentExists(UserId, DefaultDocumentId, InitialCompanyDocument);
+            await DatabaseAccessor.EnsureDocumentExists(UserId, documentId, InitialCompanyDocument);
         }
 
         [HttpPost]
@@ -64,11 +64,6 @@ namespace DemoServer.Controllers.Demos.Attachments.StoreAttachment
             #endregion
           
             return Ok($"Attachment {attachmentName} was stored successfully on document {documentId}");
-        }
-
-        private async Task SetRunPrerequisites(string documentId)
-        {
-            await DatabaseAccessor.EnsureDocumentExists(UserId, documentId, InitialCompanyDocument);
         }
     }
     
