@@ -5,7 +5,7 @@
     "DescriptionLines": [
         "**Attachments** are binary data files, such as images, videos, PDF's, etc., that can be attached to a document.",
         "",
-        "A document can have any number of attachments, and an attachment has no size limit."
+        "A document can have any number of attachments, and an attachment can be of any size."
     ],
 
     "Assets": [  
